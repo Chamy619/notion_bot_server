@@ -45,6 +45,17 @@ app.post('/api/user/login', (req, res) => {
     });
 });
 
+app.get('/api/user/logout', (req, res) => {
+    const tokenId = req.headers.authorization;
+    User.findOneAndUpdate({tokenId}, {tokenId: ''}, (err) => {
+        if (err) {
+            res.json({success: false});
+            return;
+        }
+        res.json({success: true});
+    });
+})
+
 // 로그인 여부 확인
 app.get('/api/user/auth', (req, res) => {
     const tokenId = req.headers.authorization;
